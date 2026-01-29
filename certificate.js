@@ -18,21 +18,33 @@ export class CertificateManager {
         return hashHex;
     }
 
-    async registerOnBlockchain(fileHash, identifier) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        const mockCertificate = {
-            hash: fileHash,
-            identifier: identifier || 'Anónimo',
-            timestamp: new Date().toISOString(),
-            transactionId: '0x' + Array(65).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join(''),
-            blockNumber: Math.floor(Math.random() * 1000000),
-            network: 'Sepolia Testnet',
-            explorerUrl: `https://sepolia.etherscan.io/tx/0x${Math.random().toString(16).substr(2, 64)}`
-        };
+  async registerOnBlockchain(fileHash, identifier) {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Generar un hash de transacción válido (64 caracteres hexadecimales)
+    const generateValidTxHash = () => {
+        const chars = '0123456789abcdef';
+        let hash = '';
+        for (let i = 0; i < 64; i++) {
+            hash += chars[Math.floor(Math.random() * 16)];
+        }
+        return '0x' + hash;
+    };
+    
+    const txHash = generateValidTxHash();
+    
+    const mockCertificate = {
+        hash: fileHash,
+        identifier: identifier || 'Anónimo',
+        timestamp: new Date().toISOString(),
+        transactionId: txHash,  // Usar el mismo hash generado
+        blockNumber: Math.floor(Math.random() * 1000000),
+        network: 'Sepolia Testnet',
+        explorerUrl: `https://sepolia.etherscan.io/tx/${txHash}`  // Usar el mismo hash
+    };
 
-        return mockCertificate;
-    }
+    return mockCertificate;
+}
 
     async createAndDownloadPackage(certificate) {
         const zip = new JSZip();
