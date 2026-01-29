@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileChain Registry - Proof of Existence</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="home-btn" id="homeBtn">Home</button>
+            <div class="header-left">
+                <h1>Registro Universal Libre</h1>
+                <p class="subtitle">Registro indestructible para tu contenido virtual</p>
+                <p class="subtitle-extra">Registra tus archivos digitales como imágenes, videos, música, textos o cualquier tipo de archivo digital de tu propiedad y protege tus derechos de la manera más segura posible</p>
+            </div>
+            <div class="logo">
+                <img src="ddfjd(1).png" alt="Registro Universal Libre">
+            </div>
+            <div class="user-section">
+                <button class="login-btn" id="loginBtn">Iniciar sesión</button>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <span class="user-email" id="userEmail"></span>
+                    <a href="#" class="logout-btn" id="logoutBtn">Cerrar sesión</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="logo-in-upload">
+                        <img src="gfgn.png" alt="Registro Universal Libre">
+                    </div>
+                    <p class="upload-text">Arrastra tu archivo aquí o <span class="upload-link">haz clic para seleccionar</span></p>
+                    <p class="upload-subtext">Sin tamaño máximo • Sin subida a servidor • 100% privado</p>
+                    <input type="file" id="fileInput" class="file-input" hidden>
+                </div>
+
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="file-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke-width="2"/>
+                            <polyline points="13,2 13,9 20,9" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="file-details">
+                        <p class="file-name" id="fileName"></p>
+                        <p class="file-size" id="fileSize"></p>
+                    </div>
+                    <button class="remove-file" id="removeFile">×</button>
+                </div>
+
+                <div class="identifier-section">
+                    <label for="identifier" class="identifier-label">Identificador opcional</label>
+                    <input type="text" id="identifier" class="identifier-input" placeholder="Tu nombre o email">
+                    <p class="identifier-help">Este identificador se incluirá en el certificado</p>
+                </div>
+
+                <button class="register-btn" id="registerBtn" disabled>
+                    <span class="btn-text">Registrar archivo en blockchain</span>
+                    <span class="btn-icon">→</span>
+                </button>
+
+            </div>
+
+            <div class="status-section" id="statusSection" style="display: none;">
+                <div class="status-item" id="statusHash">
+                    <div class="status-icon">🔍</div>
+                    <div class="status-content">
+                        <p class="status-title">Calculando huella digital...</p>
+                        <p class="status-description">Procesando tu archivo localmente</p>
+                    </div>
+                </div>
+
+                <div class="status-item" id="statusBlockchain">
+                    <div class="status-icon">⛓️</div>
+                    <div class="status-content">
+                        <p class="status-title">Registrando en blockchain...</p>
+                        <p class="status-description">Esto puede tardar un momento</p>
+                    </div>
+                </div>
+
+                <div class="status-item" id="statusPackage">
+                    <div class="status-icon">📦</div>
+                    <div class="status-content">
+                        <p class="status-title">Creando paquete de descarga...</p>
+                        <p class="status-description">Preparando tu certificado</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-header">
+                    <div class="result-icon">✅</div>
+                    <h2>¡Registro completado!</h2>
+                    <p>Tu archivo ha sido registrado exitosamente en la blockchain</p>
+                </div>
+
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Hash del archivo:</span>
+                        <span class="detail-value hash-value" id="resultHash"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Fecha y hora:</span>
+                        <span class="detail-value" id="resultDate"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Verificar en blockchain:</span>
+                        <a href="#" target="_blank" class="detail-link" id="resultLink">Ver en Etherscan</a>
+                    </div>
+                </div>
+
+                <button class="new-registration-btn" id="newRegistrationBtn">
+                    <span class="btn-text">Registrar otro archivo</span>
+                </button>
+                <button class="save-cloud-btn" id="saveCloudBtn" style="margin-top: 1rem;">
+                    <span class="btn-text">💾 Guardar en mi nube personal</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Registration Modal -->
+        <div class="modal" id="registrationModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Guardar certificados en la nube</h2>
+                    <button class="close-btn" id="closeModalBtn">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="registration-info">
+                        <p>Regístrate para acceder a tu espacio personal seguro donde podrás guardar tus certificados generados de forma opcional.</p>
+                    </div>
+                    
+                    <form class="registration-form" id="registrationForm">
+                        <div class="form-group">
+                            <input type="email" id="emailInput" class="form-input" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="passwordInput" class="form-input" placeholder="Contraseña" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Registrarse</button>
+                    </form>
+                    
+                    <div class="social-login">
+                        <p>O regístrate con:</p>
+                        <div class="social-buttons">
+                            <button class="google-btn" id="googleLoginBtn">
+                                <img src="https://www.google.com/favicon.ico" alt="Google">
+                                Continuar con Google
+                            </button>
+                            <button class="outlook-btn" id="outlookLoginBtn">
+                                <img src="https://outlook.live.com/favicon.ico" alt="Outlook">
+                                Continuar con Outlook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Storage Section -->
+        <div class="personal-storage" id="personalStorage" style="display: none;">
+            <div class="certificates-list" id="certificatesList">
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Seguro • Privado • Sin registro</p>
+        </footer>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "jszip": "https://esm.sh/jszip@3.10.1",
+                "ethers": "https://esm.sh/ethers@6.8.1"
+            }
+        }
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
